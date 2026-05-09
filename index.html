@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Волтер Вайт - Breaking Bad</title>
+
+    <!--Шрифти з Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noticia+Text:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Slab:wght@100..900&family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        /*Підключення локального шрифту*/
+        @font-face {
+            font-family: 'MyLocalFont';
+            src: url('MyLocalFont.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /*Базові стилі*/
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif; /* Основний текст */
+            line-height: 1.6;
+            color: #222;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /*Стилі для заголовків з Google Fonts*/
+        h1, h2, h3 {
+            font-family: 'Noticia Text', serif; /* Заголовки */
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333333;
+            border-bottom: 2px solid #077405;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 700; /* Жирний для заголовків третього рівня */
+            color: #555555;
+        }
+
+        /*стилі основного тексту*/
+        p {
+            font-family: 'Vazirmatn', sans-serif; /* Основний текст */
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: #444444;
+            font-weight: 400;
+        }
+
+        /*style for buttons*/
+        .btn {
+            display: inline-block;
+            font-family: 'Roboto Slab', serif; /* Шрифт для кнопок */
+            font-size: 1rem;
+            font-weight: 600; /* Напівжирний для кнопок */
+            padding: 12px 24px;
+            background-color: #0d8400;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background-color: #a68c00;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        /*style for sections*/
+        .profile-header {
+            background: linear-gradient(135deg, #e0e0e0 0%, #b8b8b8 100%);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-header:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Анімації для зображення профілю */
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #0d8400;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: scale(1) rotate(0deg);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.1) rotate(5deg);
+            border-color: #a68c00;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Пульсуюча анімація */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 6px 15px rgba(13, 132, 0, 0.4);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        .profile-image.pulse {
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        /* Анімація появи з поворотом */
+        @keyframes rotateIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5) rotate(-180deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .profile-image.rotate-in {
+            animation: rotateIn 1.5s ease-out forwards;
+        }
+
+        /* Анімація хвилі при наведенні */
+        .profile-image.wave-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(13, 132, 0, 0.4) 0%, transparent 70%);
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.6s ease;
+        }
+
+        .profile-image.wave-effect:hover::before {
+            opacity: 1;
+            transform: scale(2);
+        }
+
+        /* Анімація рамки */
+        @keyframes borderGlow {
+            0% {
+                border-color: #0d8400;
+                box-shadow: 0 0 5px #0d8400;
+            }
+            50% {
+                border-color: #a68c00;
+                box-shadow: 0 0 20px #a68c00;
+            }
+            100% {
+                border-color: #0d8400;
+                box-shadow: 0 0 5px #0d8400;
+            }
+        }
+
+        .profile-image.border-glow {
+            animation: borderGlow 2s infinite;
+        }
+
+        /* 3D ефект при наведенні */
+        .profile-image.three-d {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .profile-image.three-d:hover {
+            transform: perspective(500px) rotateY(15deg) scale(1.1);
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .section {
+            background: linear-gradient(to bottom, #c9c9c9, #d9d9d9);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .filmography-list {
+            list-style-type: none;
+        }
+
+        .filmography-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #aaa;
+            transition: background-color 0.3s ease;
+            border-radius: 5px;
+            padding-left: 10px;
+        }
+
+        .filmography-list li:hover {
+            background-color: rgba(13, 132, 0, 0.1);
+        }
+
+        .filmography-list li:last-child {
+            border-bottom: none;
+        }
+
+        .quote {
+            font-family: 'Vazirmatn', sans-serif; /* Основний шрифт для цитат */
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #666666;
+            border-left: 4px solid #0d8400;
+            padding-left: 20px;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .quote:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: scale(1.01);
+        }
+
+        .button-section {
+            text-align: center;
+            background: linear-gradient(135deg, #c9c9c9 0%, #e0e0e0 100%);
+        }
+
+        /* Контроли для вибору анімації */
+        .animation-controls {
+            background: linear-gradient(135deg, #c9c9c9 0%, #e0e0e0 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .animation-btn {
+            font-family: 'Roboto Slab', serif; /* Шрифт кнопок для контролів анімації */
+            background-color: #0d8400;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 600;
+        }
+
+        .animation-btn:hover {
+            background-color: #a68c00;
+        }
+
+        .animation-btn.active {
+            background-color: #a68c00;
+            box-shadow: 0 0 10px rgba(166, 140, 0, 0.5);
+        }
+
+        .profile-image.rotate-in {
+            animation: rotateIn 1.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- header of page -->
+        <div class="profile-header">
+            <img src="https://upload.wikimedia.org/wikipedia/en/0/03/Walter_White_S5B.png" alt="Walter White" class="profile-image" id="profileImage">
+            <div class="profile-info">
+                <h1>Волтер Вайт</h1> 
+                <p>Волтер Вайт (також відомий як Гайзенберг) — головний персонаж серіалу "Breaking Bad". Він був вчителем хімії в середній школі, який після діагнозу раку легенів почав виготовляти та продавати метамфетамін, щоб забезпечити свою сім'ю.</p>
+                <a href="#" class="btn">Дізнатись більше</a>
+            </div>
+        </div>
+
+        <!-- Short info about him-->
+        <div class="section">
+            <h2>Біографія</h2>
+            <p>Волтер Вайт народився 7 вересня 1958 року. Він був геніальним хіміком, який співзаснував компанію Gray Matter Technologies, але покинув її до того, як вона стала успішною. Пізніше він став вчителем хімії в середній школі в Альбукерке, Нью-Мексико.</p>
+            <p class="quote">"I am not in danger, Skyler. I am the danger. A guy opens his door and gets shot, and you think that of me? No. I am the one who knocks!"</p>
+            <p>Після того, як у нього діагностували неоперабельний рак легенів, Волтер почав виготовляти метамфетамін з колишнім учнем Джессі Пінкменом, щоб забезпечити свою сім'ю після своєї смерті. Його бізнес швидко перетворився на велику кримінальну імперію.</p>   
+        </div>
+
+        <!--Інформація про фільмографію-->
+        <div class="section">
+            <h2>Фільмографія</h2>
+            <ul class="filmography-list">
+                <li>
+                    <h3>Breaking Bad (2008-2013)</h3>
+                    <p>Головна роль: Волтер Вайт / Гейзенберг (Брайан Кренстон)</p>
+                </li>
+                <li>
+                    <h3>El Camino: A Breaking Bad Movie (2019)</h3>
+                    <p>Камео: Волтер Вайт</p>
+                </li>
+                <li>
+                    <h3>Better Call Saul (2015-2022)</h3>
+                    <p>Камео: Волтер Вайт</p>
+                </li>
+            </ul>
+        </div>
+
+        <!--кнопка для переходу на інші сторінки-->
+        <div class="section button-section">
+            <h2>Додаткова інформація</h2>
+            <p>Хочете дізнатися більше про Волтера Вайта та його пригоди?</p>
+            <a href="#" class="btn">Переглянути повне біо</a>
+            <a href="#" class="btn">Список всіх серій</a>
+            <a href="#" class="btn">Інші персонажі</a>
+        </div>
+    </div>
+
+    <script>
+        function setAnimation(animationType) {
+            const image = document.getElementById('profileImage');
+            const buttons = document.querySelectorAll('.animation-btn');
+            
+            // Видаляємо всі класи анімацій
+            image.className = 'profile-image';
+            
+            // Додаємо активний клас до кнопки
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Додаємо обрану анімацію
+            switch(animationType) {
+                case 'pulse':
+                    image.classList.add('pulse');
+                    break;
+                case 'rotate-in':
+                    image.classList.add('rotate-in');
+                    break;
+                case 'wave-effect':
+                    image.classList.add('wave-effect');
+                    break;
+                case 'border-glow':
+                    image.classList.add('border-glow');
+                    break;
+                case 'three-d':
+                    image.classList.add('three-d');
+                    break;
+                default:
+                    // Стандартна анімація (вже встановлена за замовчуванням)
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
